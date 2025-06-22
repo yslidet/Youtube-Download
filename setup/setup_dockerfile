@@ -1,0 +1,46 @@
+# Use the official Python image as the base
+# FROM python:3.10-slim
+FROM python:3.10-buster
+
+# Set working directory
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y nano curl
+RUN apt update && apt install -y ffmpeg curl && apt clean
+# RUN apt-get update && apt-get install -y \
+#     git \
+#     libglib2.0-0 \
+#     libsm6 \
+#     libxext6 \
+#     libxrender1 \
+#     libgl1-mesa-glx \
+#     && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install -y \
+    nano \
+    curl \
+    git \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    libgl1-mesa-glx \
+    poppler-utils \
+    gcc \
+    && apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies (use requirements.txt to manage them)
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose port (change if your app uses another port)
+# EXPOSE 5000
+
+# Set the command to run the app (modify as needed)
+# CMD ["python", "app.py"]
+
+WORKDIR /home
