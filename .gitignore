@@ -1,2 +1,4 @@
 push2git.sh
 .DS_Store
+output/*
+!output/.gitkeep
